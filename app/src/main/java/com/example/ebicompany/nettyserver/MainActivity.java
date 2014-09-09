@@ -4,14 +4,27 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLException;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.util.SelfSignedCertificate;
 
 public class MainActivity extends Activity {
 
     //region constants
     static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8081"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8085"));
     //endregion
 
     //region instance variables
@@ -22,7 +35,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*// Configure SSL.
+        // Configure SSL.
         SslContext sslCtx = null;
         if (SSL) {
             SelfSignedCertificate ssc = null;
@@ -42,20 +55,21 @@ public class MainActivity extends Activity {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
+        View clientMessageAria = this.findViewById(R.id.txtClientMessageAria);
 
         try {
             bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new HsWebSocketServerInitializer(sslCtx));
+                    .childHandler(new HsWebSocketServerInitializer(sslCtx, clientMessageAria));
             Channel ch = bootstrap.bind(PORT).sync().channel();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
-        }*/
+        }
     }
 
 

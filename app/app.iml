@@ -79,6 +79,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
+    <orderEntry type="library" exported="" name="tomcat-jni-8.0.0-rc1" level="project" />
+    <orderEntry type="library" exported="" name="javassist" level="project" />
     <orderEntry type="library" exported="" name="netty-all-4.0.23.Final" level="project" />
   </component>
 </module>

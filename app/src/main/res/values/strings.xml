@@ -6,7 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="lblIpAddressText">IP Address :</string>
     <string name="lblPortNumberText">Enter Port Number :</string>
-    <string name="defaultIPAddress">127.0.0.1</string>
+    <string name="defaultIPAddress">10.0.2.15</string>
+    <string name="defaultPortNumber">8085</string>
     <string name="lblRecievedMessages">Recieved messages from client :</string>
 
 </resources>

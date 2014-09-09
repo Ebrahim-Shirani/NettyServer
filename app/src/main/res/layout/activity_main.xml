@@ -55,6 +55,7 @@
         android:layout_toRightOf= "@id/lblPortNumber"
         android:layout_marginLeft="10dp"
         android:textSize="18dp"
+        android:editable="false"
         />
 
     <EditText
@@ -69,7 +70,7 @@
         android:layout_alignStart="@+id/txtIPAddress"
         android:layout_below="@+id/txtIPAddress"
         android:layout_marginTop="5dp"
-        />
+        android:text="@string/defaultPortNumber" />
 
     <TextView
         android:layout_width="wrap_content"
