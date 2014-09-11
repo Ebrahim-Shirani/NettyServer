@@ -24,12 +24,14 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.util.CharsetUtil;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
+import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static io.netty.handler.codec.http.HttpHeaders.Names.FROM;
 import static io.netty.handler.codec.http.HttpHeaders.Names.HOST;
 import static io.netty.handler.codec.http.HttpHeaders.Names.UPGRADE;
 import static io.netty.handler.codec.http.HttpHeaders.Values.WEBSOCKET;
 import static io.netty.handler.codec.http.HttpMethod.GET;
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
+import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpResponseStatus.FORBIDDEN;
 import static io.netty.handler.codec.http.HttpResponseStatus.INTERNAL_SERVER_ERROR;
 import static io.netty.handler.codec.http.HttpResponseStatus.UNAUTHORIZED;
@@ -118,7 +120,7 @@ public class HsWebSocketServerHandler extends SimpleChannelInboundHandler<Object
             return;
         }
 
-        /*// Send the demo page and favicon.ico
+        // Send the demo page and favicon.ico
         if ("/".equals(req.getUri())) {
             ByteBuf content = WebSocketServerIndexPage.getContent(getWebSocketLocation(req));
             FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, OK, content);
@@ -127,9 +129,10 @@ public class HsWebSocketServerHandler extends SimpleChannelInboundHandler<Object
             HttpHeaders.setContentLength(res, content.readableBytes());
 
             sendHttpResponse(ctx, req, res);
+            //Toast.makeText(this.txtClientMessageAria.getContext(), "Payam resid", Toast.LENGTH_LONG);
             return;
         }
-        if ("/favicon.ico".equals(req.getUri())) {
+        /*if ("/favicon.ico".equals(req.getUri())) {
             FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, NOT_FOUND);
             sendHttpResponse(ctx, req, res);
             return;

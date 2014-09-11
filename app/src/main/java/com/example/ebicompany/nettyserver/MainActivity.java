@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.security.cert.CertificateException;
 
 import javax.net.ssl.SSLException;
@@ -24,11 +27,12 @@ public class MainActivity extends Activity {
 
     //region constants
     static final boolean SSL = System.getProperty("ssl") != null;
-    static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8085"));
+    //static final int PORT = Integer.parseInt(System.getProperty("port", SSL? "8443" : "8085"));
     //endregion
 
     //region instance variables
     private ServerBootstrap bootstrap;
+    int PORT = 8085;
     //endregion
 
     @Override
@@ -57,14 +61,25 @@ public class MainActivity extends Activity {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         View clientMessageAria = this.findViewById(R.id.txtClientMessageAria);
 
+        TextView txtPortNumber = (TextView)this.findViewById(R.id.lblPortNumber);
+        PORT = 8090;//Integer.parseInt(txtPortNumber.getText().toString());
+        byte[] ipAddress = new byte[]{10,0,2,15};
+        //String ip = ((TextView)this.findViewById(R.id.lblIpAddress)).getText().toString();
+
         try {
             bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new HsWebSocketServerInitializer(sslCtx, clientMessageAria));
-            Channel ch = bootstrap.bind(PORT).sync().channel();
+            //try {
+                Channel ch = bootstrap.bind(Inet4Address.getByAddress(ipAddress),PORT).sync().channel();
+            //} catch (UnknownHostException e) {
+                //e.printStackTrace();
+            //}
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         } finally {
             bossGroup.shutdownGracefully();
